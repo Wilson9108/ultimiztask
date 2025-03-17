@@ -9,6 +9,7 @@ function App() {
   const [priceerror,setPriceError] = useState("")
   const[value,setValues] = useState("")
   const [priceValue,setPriceValue] = useState("")
+  const [productData,setProductData]= useState([])
 
   console.log(price)
   function handleForm(e){
@@ -26,9 +27,14 @@ function App() {
     else{
       setPriceError("")
     }
-    setValues(product)
-    setPriceValue(price)
+    // setValues(product)
+    // setPriceValue(price)
+    setProductData([...productData,{product,price:Number(price)}])
   }
+
+  let totalPrice = productData.reduce((acc,curr)=>{
+    return acc+Number(curr.price)
+  },0)
 
 
   
@@ -52,13 +58,20 @@ function App() {
       <div>
       <h3>Output Result</h3>
       <h4>SalePrice</h4>
-      <ul>
-      <li>{value} <span style={{margin:"0px 8px"}}>{priceValue}</span></li>
-      </ul>
+
+      {productData.map(item=>(
+              <ul>
+              <li>{item.product} <span style={{margin:"0px 5px"}}>{item.price}</span></li>
+
+            </ul>
+
+      ))}
+
       </div>
       <div>
         <h4>Total Price</h4>
-        <p></p>
+        <p>{totalPrice}</p>
+       
       </div>
       
     </div>
